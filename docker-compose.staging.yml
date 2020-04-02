@@ -1,23 +1,9 @@
-version: "2.1"
+version: "3.2"
 services:
- app:
-   image: wikipedialibrary/externallinks:branch_staging
-   build: .
-   networks:
-     - main
-   env_file:
-     - '.env'
-   depends_on:
-     db:
-       condition: service_healthy
-   ports:
-     - "8000:8000"
-   volumes:
-     - ./:/app
  db:
    image: mysql:5.7
    env_file:
-     - '.env'
+     - ./template.env
    ports:
      - "3306:3306"
    networks:
@@ -27,6 +13,19 @@ services:
      test: ["CMD", "mysqladmin", "ping", "-h", "localhost","-plinks"]
      timeout: 20s
      retries: 10
+ externallinks_app:
+   image: wikipedialibrary/externallinks:branch_staging
+   build: .
+   networks:
+     - main
+   env_file:
+     - ./template.env
+   depends_on:
+     - 'db'
+   ports:
+     - "8000:8000"
+   volumes:
+     - ./:/app
  nginx:
    image: nginx
    volumes:
@@ -37,8 +36,8 @@ services:
    networks:
      - main
    depends_on:
-     - app
- eventstream:
+     - externallinks_app
+ externallinks_eventstream:
    build:
     context: .
     dockerfile: 'Dockerfile-eventstream'
@@ -47,7 +46,7 @@ services:
    depends_on:
      - db
    env_file:
-     - '.env'
+     - ./template.env
    volumes:
      - ./:/app
  cache:
@@ -59,7 +58,7 @@ services:
    entrypoint:
      - memcached
    depends_on:
-     - app
+     - externallinks_app
 
 networks:
  main:
