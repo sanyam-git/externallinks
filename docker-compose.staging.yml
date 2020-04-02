@@ -21,6 +21,8 @@ services:
      - ./template.env
    depends_on:
      - 'db'
+   volumes:
+     - ./:/app
  externallinks_app:
    image: wikipedialibrary/externallinks:app_branch_staging
    build: .
