@@ -15,7 +15,7 @@ services:
      retries: 10
  migrate:
    image: wikipedialibrary/externallinks:app_branch_staging
-   command: bash -c "python manage.py migrate"
+   command: python3 /app/manage.py migrate
    restart: on-failure
    env_file:
      - ./template.env
