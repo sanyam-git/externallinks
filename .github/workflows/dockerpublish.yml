@@ -53,8 +53,7 @@ jobs:
 
       - name: Push image
         run: |
-          APP_IMAGE_ID=wikipedialibrary/externallinks_app
-          EVENTSTREAM_IMAGE_ID=wikipedialibrary/externallinks_eventstream
+          IMAGE_ID=wikipedialibrary/externallinks
 
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
@@ -62,14 +61,14 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-          docker tag externallinks_app $APP_IMAGE_ID:branch_$VERSION
-          docker tag externallinks_eventstream $EVENTSTREAM_IMAGE_ID:branch_$VERSION
+          docker tag externallinks_app $IMAGE_ID:app_branch_$VERSION
+          docker tag externallinks_eventstream $IMAGE_ID:eventstream_branch_$VERSION
           
-          docker tag externallinks_app $APP_IMAGE_ID:commit_${GITHUB_SHA::8}
-          docker tag externallinks_eventstream $EVENTSTREAM_IMAGE_ID:commit_${GITHUB_SHA::8}
+          docker tag externallinks_app $IMAGE_ID:app_commit_${GITHUB_SHA::8}
+          docker tag externallinks_eventstream $IMAGE_ID:eventstream_commit_${GITHUB_SHA::8}
           
-          docker push $APP_IMAGE_ID:branch_$VERSION
-          docker push $EVENTSTREAM_IMAGE_ID:branch_$VERSION
+          docker push $IMAGE_ID:app_branch_$VERSION
+          docker push $IMAGE_ID:eventstream_branch_$VERSION
           
-          docker push $APP_IMAGE_ID:commit_${GITHUB_SHA::8}
-          docker push $EVENTSTREAM_IMAGE_ID:commit_${GITHUB_SHA::8}
+          docker push $IMAGE_ID:app_commit_${GITHUB_SHA::8}
+          docker push $IMAGE_ID:eventstream_commit_${GITHUB_SHA::8}
