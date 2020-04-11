@@ -6,6 +6,7 @@ ENV LOG_FILE="extlinks.log"
 WORKDIR /app
 COPY . extlinks
 COPY requirements/django.txt /app/
+COPY manage.py /app/
 
 RUN mkdir logs
 
