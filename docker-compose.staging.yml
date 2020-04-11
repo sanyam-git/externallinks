@@ -15,7 +15,7 @@ services:
      retries: 10
  migrate:
    image: wikipedialibrary/externallinks:app_branch_staging
-   command: python3 manage.py migrate
+   command: python3 extlinks/manage.py migrate
    restart: on-failure
    env_file:
      - '.env'
