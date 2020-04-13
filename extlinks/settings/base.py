@@ -69,7 +69,7 @@ DATABASES = {
         'NAME': os.environ['MYSQL_DATABASE'],
         'USER': 'root',
         'PASSWORD': os.environ['MYSQL_ROOT_PASSWORD'],
-        'HOST': 'db',
+        'HOST': os.environ['DJANGO_DB_HOST'],
         'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'},
     }
