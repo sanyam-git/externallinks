@@ -20,7 +20,7 @@ services:
    env_file:
      - '.env'
    depends_on:
-     - tasks.staging_db
+     - db
    volumes:
      - ./:/app
  externallinks_app:
@@ -55,7 +55,7 @@ services:
    networks:
      - main
    depends_on:
-     - tasks.staging_db
+     - db
    env_file:
      - '.env'
    volumes:
