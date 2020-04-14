@@ -20,7 +20,7 @@ services:
    env_file:
      - '.env'
    depends_on:
-     - db
+     - 'db'
    volumes:
      - ./:/app
  externallinks_app:
@@ -31,7 +31,7 @@ services:
    env_file:
      - '.env'
    depends_on:
-     - migrate
+     - 'migrate'
    ports:
      - "8000:8000"
    volumes:
@@ -46,7 +46,7 @@ services:
    networks:
      - main
    depends_on:
-     - externallinks_app
+     - 'externallinks_app'
  externallinks_eventstream:
    image: wikipedialibrary/externallinks:eventstream_branch_staging
    build:
@@ -55,7 +55,7 @@ services:
    networks:
      - main
    depends_on:
-     - db
+     - 'db'
    env_file:
      - '.env'
    volumes:
@@ -69,7 +69,7 @@ services:
    entrypoint:
      - memcached
    depends_on:
-     - externallinks_app
+     - 'externallinks_app'
 
 networks:
  main:
